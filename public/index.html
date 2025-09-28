@@ -35,7 +35,7 @@
         });
         document.querySelectorAll('#expense-rows input').forEach(el => {
             if (el.value.trim() !== '') {
-                data.income.push(el.value.trim());
+                data.expenses.push(el.value.trim());
             }
         });
         // SAVE DATA TO LOCAL STORAGE
@@ -84,7 +84,6 @@
     <section id="income" class="hidden bg-white rounded-2xl shadow-lg p-8">
         <h3 class="text-2xl font-semibold text-blue-600 mb-4">Income</h3>
         <p class="text-gray-700">Here you can enter your sources of income.</p>
-        <input type="text" placeholder="expense" class="border rounded px-3 py-2 mt-2 w-half">
         <!-- Container where rows will be added -->
         <div id="income-rows" class="space-y-2 mt-4">
             <input type="text" placeholder="Rent" class="border rounded px-3 py-2 w-full">
