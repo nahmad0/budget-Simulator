@@ -16,32 +16,76 @@
     }
     function addRow(id) {
         const target = document.getElementById(id);
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.placeholder = 'New entry';
-        input.className = "border rounded px-3 py-2 w-full";
-        target.appendChild(input)
-    }
-    function saveAllData() {
-        let data =
-        {
-            income: [],
-            expenses: []
-        };
-        document.querySelectorAll('#income-rows input').forEach(el => {
-            if (el.value.trim() !== '') {
-                data.income.push(el.value.trim());
-            }
+
+        // Create a container for the row
+        const row = document.createElement("div");
+        row.className = "flex items-center space-x-2";
+
+        // Create the Label for the new dropdown
+        const label = document.createElement("span");
+        label.className = "w-32 font-medium text-gray-700";
+        label.innerText = "Select type";
+
+        // clone hidden dropdowns
+        let dropdown;
+        if (id === "income-rows") {
+        dropdown = document.getElementById("income-select").cloneNode(true);
+        } else {
+        dropdown = document.getElementById("expense-select").cloneNode(true);
+        }
+        dropdown.removeAttribute("id"); // gets ride of id from element since the orginal its cloned from still exists
+        dropdown.className = "flex-1 bg-blue-600 text-white px-2 py-2 rounded";
+
+        // eventlistener
+        dropdown.addEventListener("change", () => {
+        label.innerText = dropdown.value ? dropdown.value : "Select type"; // change value to downdown
         });
-        document.querySelectorAll('#expense-rows input').forEach(el => {
-            if (el.value.trim() !== '') {
-                data.expenses.push(el.value.trim());
-            }
-        });
-        // SAVE DATA TO LOCAL STORAGE
-        localStorage.setItem('budgetSimData', JSON.stringify(data));
-        alert(`Data Has Been Saved\n${localStorage.getItem('budgetSimData')}`);
+
+        const input = document.createElement("input");
+        input.type = "number";
+        input.placeholder = "Amount";
+        input.className = "flex-1 border rounded px-3 py-2";
+
+        row.appendChild(label);
+        row.appendChild(dropdown);
+        row.appendChild(input);
+        target.appendChild(row);
     }
+
+  function saveAllData() {
+    let data = { income: [], expenses: [] };
+
+    // Collect income rows
+    document.querySelectorAll("#income-rows > div").forEach(row => {
+      const select = row.querySelector("select");
+      const input = row.querySelector("input");
+      if (select && select.value && input && input.value.trim() !== "") {
+        data.income.push({
+          type: select.value,
+          amount: parseFloat(input.value)
+        });
+      }
+    });
+
+    // Collect expense rows
+    document.querySelectorAll("#expense-rows > div").forEach(row => {
+      const select = row.querySelector("select");
+      const input = row.querySelector("input");
+      if (select && select.value && input && input.value.trim() !== "") {
+        data.expenses.push({
+          type: select.value,
+          amount: parseFloat(input.value)
+        });
+      }
+    });
+
+    // Save to localStorage
+    localStorage.setItem("budgetData", JSON.stringify(data));
+
+    alert("Data saved!\n" + JSON.stringify(data, null, 2));
+  }
+
+
     window.onload = () => {
       showSection("home"); // Default section
     }
@@ -88,17 +132,17 @@
         <div id="income-rows" class="space-y-2 mt-4">
             <!-- rows to be inserted -->
         </div>
-            <div class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-grey-700"></div>
-            <label for="expense-select" class="block text-gray-700 font-medium mb-2">Expense Type</label>
-            <select title="expense-select" name="expense" id="expense-select" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                <option value="">-- Please choose Expense Type --</option>
-                <option value="Taxes">Taxes</option>
-                <option value="Food">Food</option>
-                <option value="Phone/Cable">Phone/Cable</option>
-                <option value="Insurance">Insurance</option>
-                <option value="Transportation">Transportation</option>
-                <option value="Leisure">Leisure</option>
-            </select>
+            <div hidden>
+                <div class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-grey-700"></div>
+                <label for="income-select" class="block text-gray-700 font-medium mb-2">Expense Type</label>
+                <select title="income-select" name="income" id="income-select" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    <option value="">-- Please Choose Income Type --</option>
+                    <option value="Salary">Salary</option>
+                    <option value="Investment">Investment</option>
+                    <option value="Benefits">Benefits</option>
+                    <option value="Misc">Misc</option>
+                </select>
+            </div>
         <button onclick="addRow('income-rows')" class="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">( + ) Add Row</button>
         <button onclick="saveAllData()" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Save All</button>
     </section>
@@ -112,16 +156,18 @@
             <!-- rows to be inserted -->
         </div>
             <div class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-grey-700"></div>
-            <label for="expense-select" class="block text-gray-700 font-medium mb-2">Expense Type</label>
-            <select title="expense-select" name="expense" id="expense-select" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                <option value="">-- Please choose Expense Type --</option>
-                <option value="Taxes">Taxes</option>
-                <option value="Food">Food</option>
-                <option value="Phone/Cable">Phone/Cable</option>
-                <option value="Insurance">Insurance</option>
-                <option value="Transportation">Transportation</option>
-                <option value="Leisure">Leisure</option>
-            </select>
+            <div hidden>
+                <label for="expense-select" class="block text-gray-700 font-medium mb-2">Expense Type</label>
+                    <select title="expense-select" name="expense" id="expense-select" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                        <option value="">-- Please Choose Expense Type --</option>
+                        <option value="Taxes">Taxes</option>
+                        <option value="Food">Food</option>
+                        <option value="Phone/Cable">Phone/Cable</option>
+                        <option value="Insurance">Insurance</option>
+                        <option value="Transportation">Transportation</option>
+                        <option value="Leisure">Leisure</option>
+                    </select>
+            </div>
             <button onclick="addRow('expense-rows')" class="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">( + ) Add Row</button>
             <button onclick="saveAllData()" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Save All</button>
         </div>
