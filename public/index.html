@@ -1,29 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome Page</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Bugdet Simulator</h1>
-    <nav>
-        <div><h2>Home</h2></div>
-        <div><h2>Income</h2></div>
-        <div><h2>Expenses</h2></div>
-        <div><h2>Simulator</h2></div>
-        <div><h2>More</h2></div>
-    </nav>
-    <div>
-        <h3>WELCOME</h3>
-        <p>Learn how you can achieve finanical freedom with our buget simulator</p>
-        <ol>
-            <li>Enter Your income</li>
-            <li>Enter Your Expenses</li>
-            <li>View Our simulator</li>
-            <li>Learn How You can Achieve Finanical Freedom</li>
-        </ol>
+<body class="bg-gray-100 text-gray-900 font-sans">
+  <!-- Header -->
+  <header class="bg-blue-600 text-white py-6 shadow-md">
+    <h1 class="text-3xl font-bold text-center">Budget Simulator</h1>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="bg-blue-500 shadow-inner">
+    <ul class="flex justify-center space-x-8 py-4 text-lg font-medium text-white">
+      <li><a href="#" class="hover:text-yellow-300 transition">Home</a></li>
+      <li><a href="#" class="hover:text-yellow-300 transition">Income</a></li>
+      <li><a href="#" class="hover:text-yellow-300 transition">Expenses</a></li>
+      <li><a href="#" class="hover:text-yellow-300 transition">Simulator</a></li>
+      <li><a href="#" class="hover:text-yellow-300 transition">More</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-3xl mx-auto mt-10 px-6">
+    <div class="bg-white rounded-2xl shadow-lg p-8">
+      <h3 class="text-2xl font-semibold text-center text-blue-600 mb-4">WELCOME</h3>
+      <p class="text-center text-gray-700 mb-6">
+        Learn how you can achieve financial freedom with our budget simulator.
+      </p>
+      <ol class="list-decimal list-inside space-y-2 text-gray-800">
+        <li>Enter your income</li>
+        <li>Enter your expenses</li>
+        <li>View our simulator</li>
+        <li>Learn how you can achieve financial freedom</li>
+      </ol>
     </div>
+  </main>
 </body>
 </html>
