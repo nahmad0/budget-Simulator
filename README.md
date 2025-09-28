@@ -9,11 +9,6 @@ Users can add income and expenses dynamically, simulate their budget, and learn 
 - [About](#about)
 - [Features](#features)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Screenshots](#screenshots)
-- [Technologies Used](#technologies-used)
-- [Future Improvements](#future-improvements)
-- [License](#license)
 
 ---
 
@@ -44,3 +39,5 @@ OR
 Clone the repository:
    ```bash
    git clone https://github.com/yourusername/budget-simulator.git
+
+
